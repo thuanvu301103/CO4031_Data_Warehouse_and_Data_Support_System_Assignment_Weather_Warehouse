@@ -1,0 +1,116 @@
+[
+	{
+		"place_id": "binh-duong",
+		"lat": 11.32540240,
+		"lon": 106.47701700,
+		"station_id": "SE001"
+	},
+	{
+		"place_id": "binh-phuoc",
+		"lat": 11.75118940,
+		"lon": 106.72346390,
+		"station_id": "SE002"
+	},
+	{
+		"place_id": "ho-chi-minh",
+		"lat": 10.82309890,
+		"lon": 106.62966380,
+		"station_id": "SE003"
+	},
+	{
+		"place_id": "dong-nai",
+		"lat": 11.06863050,
+		"lon": 107.16759760,
+		"station_id": "SE004"
+	},
+	{
+		"place_id": "tay-ninh",
+		"lat": 11.33515540,
+		"lon": 106.10988540,
+		"station_id": "SE005"
+	},
+	{
+		"place_id": "ba-ria-vung-tau",
+		"lat": 10.54173970,
+		"lon": 107.24299760,
+		"station_id": "SE006"
+	},
+	{
+		"place_id": "long-an",
+		"lat": 10.56071680,
+		"lon": 106.64976230,
+		"station_id": "MD001"
+	},
+	{
+		"place_id": "dong-thap",
+		"lat": 10.49379890,
+		"lon": 105.68817880,
+		"station_id": "MD002"
+	},
+	{
+		"place_id": "tien-giang",
+		"lat": 10.44933240,
+		"lon": 106.34205040,
+		"station_id": "MD003"
+	},
+	{
+		"place_id": "an-giang",
+		"lat": 10.52158360,
+		"lon": 105.12589550,
+		"station_id": "MD004"
+	},
+	{
+		"place_id": "ben-tre",
+		"lat": 10.24335560,
+		"lon": 106.37555100,
+		"station_id": "MD005"
+	},
+	{
+		"place_id": "vinh-long",
+		"lat": 10.23957400,
+		"lon": 105.95719280,
+		"station_id": "MD006"
+	},
+	{
+		"place_id": "tra-vinh",
+		"lat": 9.81274100,
+		"lon": 106.29929120,
+		"station_id": "MD007"
+	},
+	{
+		"place_id": "hau-giang",
+		"lat": 9.75789800,
+		"lon": 105.64125270,
+		"station_id": "MD008"
+	},
+	{
+		"place_id": "kien-giang",
+		"lat": 9.82495870,
+		"lon": 105.12589550,
+		"station_id": "MD009"
+	},
+	{
+		"place_id": "soc-trang",
+		"lat": 9.60252100,
+		"lon": 105.97390490,
+		"station_id": "MD010"
+	},
+	{
+		"place_id": "bac-lieu",
+		"lat": 9.29400270,
+		"lon": 105.72156630,
+		"station_id": "MD011"
+	},
+	{
+		"place_id": "ca-mau",
+		"lat": 9.15267280,
+		"lon": 105.19607950,
+		"station_id": "MD012"
+	},
+	{
+		"place_id": "can-tho",
+		"lat": 10.03418510,
+		"lon": 105.72255070,
+		"station_id": "MD013"
+	}
+]
