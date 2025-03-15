@@ -1,6 +1,12 @@
 -- Insert data into dim_time
-INSERT INTO climeweather.dim_time (time_id, date, month, year, season)
-VALUES (20250311, '2025-03-11', 3, 2025, 'Spring');
+INSERT INTO climeweather.dim_time (date, day, month, quarter, year)
+SELECT 
+    d::DATE AS date,
+    EXTRACT(DAY FROM d) AS day,
+    EXTRACT(MONTH FROM d) AS month,
+    EXTRACT(QUARTER FROM d) AS quarter,
+    EXTRACT(YEAR FROM d) AS year
+FROM generate_series('2015-01-01'::DATE, '2030-12-31'::DATE, '1 day'::INTERVAL) d;
 
 -- Insert data into dim_location
 INSERT INTO climeweather.dim_location (region, province, station_id)

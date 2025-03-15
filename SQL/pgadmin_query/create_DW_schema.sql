@@ -3,11 +3,12 @@ CREATE SCHEMA climeweather;
 
 -- Create Dimension table: dim_time
 CREATE TABLE climeweather.dim_time (
-    time_id INT PRIMARY KEY,
-    date DATE NOT NULL,
+    time_id SERIAL PRIMARY KEY,
+    date DATE NOT NULL UNIQUE,
+    day INT NOT NULL,
     month INT NOT NULL,
-    year INT NOT NULL,
-    season VARCHAR(20) NOT NULL
+    quarter INT NOT NULL,
+    year INT NOT NULL
 );
 
 -- Create Dimension table: dim_location

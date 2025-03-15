@@ -8,7 +8,7 @@ CREATE TABLE climeweather.staging_weather_raw (
 
 CREATE TABLE climeweather.staging_weather_cleaned (
     id SERIAL PRIMARY KEY,
-    timestamp TIMESTAMP NOT NULL,
+    timestamp DATE NOT NULL,
     location_id INT NOT NULL,
     temperature NUMERIC(5,2),
     precipitation NUMERIC(5,2),

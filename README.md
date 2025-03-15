@@ -11,7 +11,7 @@
 
 ## Create Data houseware Schema on PostgreSQL
 
-### Create new Database on PGADMIN
+### Create new Database using pgADMIN
 1. Open `pgAdmin`.
 2. Go to `Object` => `Create` => `Database`.
 3. Enter the database name (for example: `Climeweather_dw`).
@@ -26,11 +26,12 @@ CREATE SCHEMA climeweather;
 
 -- Create Dimension table: dim_time
 CREATE TABLE climeweather.dim_time (
-    time_id INT PRIMARY KEY,
-    date DATE NOT NULL,
+    time_id SERIAL PRIMARY KEY,
+    date DATE NOT NULL UNIQUE,
+    day INT NOT NULL,
     month INT NOT NULL,
-    year INT NOT NULL,
-    season VARCHAR(20) NOT NULL
+    quarter INT NOT NULL,
+    year INT NOT NULL
 );
 
 -- Create Dimension table: dim_location
@@ -64,7 +65,8 @@ CREATE TABLE climeweather.fact_weather (
 );
 ``` 
 
-### Input sample data: Using [these queries](SQL/query/create_DW_schema_sample_data.sql)
+### Insert sample data 
+Use [these queries](SQL/pgadmin_query/create_DW_schema_sample_data.sql) to insert sample data
 
 ### Check the data
 ```sql
@@ -84,7 +86,7 @@ SELECT * FROM climeweather.fact_weather;
 
 ### Create tables in Staging area
 
-#### Create main table to store raw data (`staging_weather_raw`)
+- Create main table to store raw data (`staging_weather_raw`)
 ```sql
 CREATE TABLE climeweather.staging_weather_raw (
     id SERIAL PRIMARY KEY,
@@ -94,14 +96,14 @@ CREATE TABLE climeweather.staging_weather_raw (
     processed BOOLEAN DEFAULT FALSE -- Check if data is processed or not
 );
 ```
-- Save all JSON data for flexibility when processing later.
-- `Processed` column is used to determine whether the data has been loaded into Data Warehouse or not.
+	- Save all JSON data for flexibility when processing later.
+	- `Processed` column is used to determine whether the data has been loaded into Data Warehouse or not.
 
-#### Create cleaned intermidate table (`staging_weather_cleaned`)
+- Create cleaned intermidate table (`staging_weather_cleaned`)
 ```sql
 CREATE TABLE climeweather.staging_weather_cleaned (
     id SERIAL PRIMARY KEY,
-    timestamp TIMESTAMP NOT NULL,
+    timestamp DATE NOT NULL,
     location_id INT NOT NULL,
     temperature NUMERIC(5,2),
     precipitation NUMERIC(5,2),
@@ -113,11 +115,35 @@ CREATE TABLE climeweather.staging_weather_cleaned (
 );
 ```
 
-## ETL (Extract-Transform-Load) Technology
-- `Apache Nifi` (Compatible with real-time data, provide visual interface) for ETL from Data Source to Staging Area
-- `Apache Airflow` from ETL from Staging Area to Data Warehouse
+### Create summarized data tables
 
-### Install and Start Apache Nifi (for version 2.2.0)
+- Create summarized data tables by provinces and month
+```sql
+CREATE TABLE climeweather.aggregated_weather_province_month AS
+SELECT 
+    t.year, 
+    t.month, 
+    l.province, 
+    AVG(f.temperature) AS avg_temp, 
+    AVG(f.humidity) AS avg_humidity,
+    AVG(f.wind_speed) AS avg_wind_speed
+FROM climeweather.fact_weather f
+JOIN climeweather.dim_time t ON f.time_id = t.time_id
+JOIN climeweather.dim_location l ON f.location_id = l.location_id
+GROUP BY t.year, t.month, l.province;
+
+-- Add UNIQUE constraint after table creation
+ALTER TABLE climeweather.aggregated_weather_province_month
+ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
+```
+
+- Other tables...
+
+
+## ETL (Extract-Transform-Load) Technology
+`Apache Nifi` (Compatible with real-time data, provide visual interface) for ETL from Data Source to Staging Area
+
+### Install and Start Apache Nifi (version 2.2.0)
 1. Download Nifi: Visit the Apache NiFi Downloads page and choose the version suitable for your operating system (Windows, macOS, or Linux).
 2. Extract the Files: Extract the `.zip` file.
 3. Set up Java: Ensure you have Java 8 or Java 11 installed. Running `java -version` in terminal to check.
@@ -133,5 +159,17 @@ CREATE TABLE climeweather.staging_weather_cleaned (
 	- Process data from `staging_weather_raw` to `staging_weather_cleaned`
 	- Update `processed` column in `staging_weather_raw` table
 	
-	
- 
+
+#### ETL from Staging Area to DWH
+- Insert data from `staging_weather_cleaned` into `fact_weather`
+- Delete data in `staging_weathe_cleaned` table
+
+## DWH and OLAP Server
+
+### Data
+
+#### Detailed, granular data
+Stored in `fact _weather` and dimetional tables
+
+#### Aggregated or summarized data
+Run [SQL queries](SQL/nifi_flow_query/update_summarized_data.sql) to summarize data in Nifi
