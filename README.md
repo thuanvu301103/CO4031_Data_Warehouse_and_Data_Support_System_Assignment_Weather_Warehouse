@@ -173,3 +173,24 @@ Stored in `fact _weather` and dimetional tables
 
 #### Aggregated or summarized data
 Run [SQL queries](SQL/nifi_flow_query/update_summarized_data.sql) to summarize data in Nifi
+
+## BI Tool
+
+### Power BI
+Power BI is a strong BI (Business Intelligence) tool, which helps you analyze and visualize data from Data Warehouse easily.
+
+### Connect Power BI to PostgreSQL
+1. Open `Power BI` → `Home` → `Get Data` → `More...`
+2. Choose `Database` → `PostgreSQL database` → `Connect` 
+3. Input connection information:
+	- Server: `localhost:5432`
+	- Database: `climeweather_dw`
+4. Choose `DirectQuery`
+5. Input username and password
+
+### Query data from Data Warehouse
+1. In `Home` → `Recent sources`
+2. Choose PostgreSQL server that has been connected
+3. Choose the data table that need to be used (the data can be Transformed before Loaded)
+
+### Generate Report 
