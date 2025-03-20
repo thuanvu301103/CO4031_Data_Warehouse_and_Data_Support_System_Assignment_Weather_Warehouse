@@ -15,8 +15,7 @@ CREATE TABLE climeweather.dim_time (
 CREATE TABLE climeweather.dim_location (
     location_id SERIAL PRIMARY KEY,
     region VARCHAR(50) NOT NULL,
-    province VARCHAR(50) NOT NULL,
-    station_id VARCHAR(20) UNIQUE NOT NULL
+    province VARCHAR(50) NOT NULL
 );
 
 -- Create Dimension table: dim_weather
