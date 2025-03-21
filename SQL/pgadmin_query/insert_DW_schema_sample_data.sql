@@ -13,7 +13,7 @@ INSERT INTO climeweather.dim_location (region, province)
 VALUES 
 	('Dong Nam Bo', 'Binh Duong'),
 	('Dong Nam Bo', 'Binh Phuoc'),
-	('Dong Nam Bo', 'TP. Ho Cho Minh'),
+	('Dong Nam Bo', 'Ho Cho Minh City'),
 	('Dong Nam Bo', 'Dong Nai'),
 	('Dong Nam Bo', 'Tay Ninh'),
 	('Dong Nam Bo', 'Ba Ria - Vung Tau'),
@@ -29,13 +29,20 @@ VALUES
 	('Dong bang S.Cuu Long', 'Soc Trang'),
 	('Dong bang S.Cuu Long', 'Bac Lieu'),
 	('Dong bang S.Cuu Long', 'Ca Mau'),
-	('Dong bang S.Cuu Long', 'TP. Can Tho')
+	('Dong bang S.Cuu Long', 'Can Tho')
 ;
 
 -- Insert data into dim_weather
-INSERT INTO climeweather.dim_weather (weather_type, ndvi)
-VALUES ('Light rain', 0.45);
-
--- Insert data into fact_weather
-INSERT INTO climeweather.fact_weather (time_id, location_id, weather_id, temperature, precipitation, humidity, wind_speed)
-VALUES (20250311, 1, 1, 30.5, 12, 80, 5);
+INSERT INTO climeweather.dim_weather_type (weather_type)
+VALUES 
+    ('Sunny'),
+    ('Rain'),
+    ('Cloudy'),
+    ('Snow'),
+    ('Stormy'),
+    ('Foggy'),
+    ('Windy'),
+    ('Hail'),
+    ('Thunderstorm'),
+    ('Drizzle')
+;

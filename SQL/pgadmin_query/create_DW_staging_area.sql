@@ -6,15 +6,16 @@ CREATE TABLE climeweather.staging_weather_raw (
     processed BOOLEAN DEFAULT FALSE -- Check if data is processed or not
 );
 
+-- Create cleaned staging table: weather
 CREATE TABLE climeweather.staging_weather_cleaned (
     id SERIAL PRIMARY KEY,
-    timestamp DATE NOT NULL,
-    location_id INT NOT NULL,
-    temperature NUMERIC(5,2),
+    time DATE,
+    location VARCHAR(50),
+    weather_type VARCHAR(50),
+    temp_max NUMERIC(5,2),
+    temp_min NUMERIC(5,2),
     precipitation NUMERIC(5,2),
     humidity NUMERIC(5,2),
-    wind_speed NUMERIC(5,2),
-    weather_type VARCHAR(50),
-    ndvi NUMERIC(5,2),
+    cloud NUMERIC(5,2),
     processed_at TIMESTAMP DEFAULT NOW()
 );
