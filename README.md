@@ -22,12 +22,8 @@
 Run [these SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `Query Tool` to create Schema tables
 
 ### Insert sample data 
-Use [these queries](SQL/pgadmin_query/insert_DW_schema_sample_data.sql) to insert sample data
-
-### Check the data
-```sql
-SELECT * FROM climeweather.fact_weather;
-```
+- Use [these SQL queries](SQL/pgadmin_query/insert_DW_schema_sample_data.sql) to insert sample data into dimension tables
+- Use [these Python scripts](asset/dump_python_script) to insert sample data into fact tables
 
 ### Visualize ERD
 1. Choose a table in `Object Explorer`
