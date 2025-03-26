@@ -19,11 +19,11 @@
 5. Click `Save`.
 
 ### Write SQL to create schema and tables
-Run [these SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `Query Tool` to create Schema tables
+Run [SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `pgAdmin`'s `Query Tool` to create Schema tables
 
 ### Insert sample data 
-- Use [these SQL queries](SQL/pgadmin_query/insert_DW_schema_sample_data.sql) to insert sample data into dimension tables
-- Use [these Python scripts](asset/dump_python_script) to insert sample data into fact tables
+- Run [SQL queries](SQL/pgadmin_query/insert_DW_schema_sample_data.sql) to insert sample data into dimension tables
+- Run [Python scripts](asset/dump_python_script) to insert sample data into fact tables
 
 ### Visualize ERD
 1. Choose a table in `Object Explorer`
@@ -37,35 +37,10 @@ Run [these SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `Query Tool` 
 	- There is an additional `Processed` column to mark the processed data or not.
 
 ### Create tables in Staging area
-
-- Create main table to store raw data (`staging_weather_raw`)
-```sql
-CREATE TABLE climeweather.staging_weather_raw (
-    id SERIAL PRIMARY KEY,
-    source VARCHAR(50) NOT NULL,  -- Data source (API, IoT, Satellite, ...)
-    raw_data JSONB NOT NULL,       -- Store JSON raw data
-    received_at TIMESTAMP DEFAULT NOW(),  -- Insert data time
-    processed BOOLEAN DEFAULT FALSE -- Check if data is processed or not
-);
-```
+- Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Raw Staging Tables:	
 	- Save all JSON data for flexibility when processing later.
 	- `Processed` column is used to determine whether the data has been loaded into Data Warehouse or not.
-
-- Create cleaned intermidate table (`staging_weather_cleaned`)
-```sql
-CREATE TABLE climeweather.staging_weather_cleaned (
-    id SERIAL PRIMARY KEY,
-    timestamp DATE NOT NULL,
-    location_id INT NOT NULL,
-    temperature NUMERIC(5,2),
-    precipitation NUMERIC(5,2),
-    humidity NUMERIC(5,2),
-    wind_speed NUMERIC(5,2),
-    weather_type VARCHAR(50),
-    ndvi NUMERIC(5,2),
-    processed_at TIMESTAMP DEFAULT NOW()
-);
-```
+- Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Cleaned Staging Tables
 
 ### Create summarized data tables
 
@@ -106,7 +81,7 @@ ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
 ### ETL Pipeline
 
 #### ETL from Data Source to Staging Area 
-- ETL from API to Staging Area
+- ETL from API to Staging Area 
 	- Extract data from API to `staging_weather_raw` table
 	- Process data from `staging_weather_raw` to `staging_weather_cleaned`
 	- Update `processed` column in `staging_weather_raw` table

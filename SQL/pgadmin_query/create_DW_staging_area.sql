@@ -1,3 +1,4 @@
+-- Create raw staging table: weather
 CREATE TABLE climeweather.staging_weather_raw (
     id SERIAL PRIMARY KEY,
     source VARCHAR(50) NOT NULL,  -- Data source (API, IoT, Satellite, ...)
@@ -15,7 +16,6 @@ CREATE TABLE climeweather.staging_weather_cleaned (
     temp_max NUMERIC(5,2),
     temp_min NUMERIC(5,2),
     precipitation NUMERIC(5,2),
-    humidity NUMERIC(5,2),
     cloud NUMERIC(5,2),
     processed_at TIMESTAMP DEFAULT NOW()
 );

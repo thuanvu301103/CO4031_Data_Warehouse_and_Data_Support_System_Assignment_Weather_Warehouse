@@ -32,7 +32,7 @@ for filename in os.listdir(folder_path):
 
     # format data
     df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y").dt.date
-    df = df[["date", "province", "weather_type", "temp_max", "temp_min", "precipitation", "humidity", "cloud"]]
+    df = df[["date", "province", "weather_type", "temp_max", "temp_min", "precipitation", "cloud"]]
     df.rename(columns={
             "date": "time",
             "province": "location"

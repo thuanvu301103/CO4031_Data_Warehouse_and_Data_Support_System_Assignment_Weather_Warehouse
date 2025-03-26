@@ -1,4 +1,4 @@
-INSERT INTO climeweather.fact_weather (time_id, location_id, weather_type_id, temp_max, temp_min, precipitation, humidity, cloud)
+INSERT INTO climeweather.fact_weather (time_id, location_id, weather_type_id, temp_max, temp_min, precipitation, cloud)
 SELECT 
     t.time_id, 
     l.location_id, 
@@ -6,7 +6,6 @@ SELECT
     s.temp_max,
     s.temp_min,
     s.precipitation,
-    s.humidity,
     s.cloud
 FROM climeweather.staging_weather_cleaned s
 JOIN climeweather.dim_time t ON s.time = t.date

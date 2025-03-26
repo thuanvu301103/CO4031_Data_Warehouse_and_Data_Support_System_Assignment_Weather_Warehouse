@@ -8,6 +8,10 @@ SELECT
     EXTRACT(YEAR FROM d) AS year
 FROM generate_series('2015-01-01'::DATE, '2030-12-31'::DATE, '1 day'::INTERVAL) d;
 
+-- Add week column into dim_time table
+ALTER TABLE climeweather.dim_time ADD COLUMN week INTEGER;
+UPDATE climeweather.dim_time SET week = EXTRACT(WEEK FROM date);
+
 -- Insert data into dim_location
 INSERT INTO climeweather.dim_location (region, province)
 VALUES 

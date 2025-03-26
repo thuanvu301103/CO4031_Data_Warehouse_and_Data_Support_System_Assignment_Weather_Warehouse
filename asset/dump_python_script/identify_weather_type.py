@@ -3,20 +3,17 @@ import os
 import pandas as pd
 
 # Identify weather type Function
-def weather_type(temp_max, precipitation, humidity, cloud):
+def weather_type(temp_max, precipitation, cloud):
     # rain (mm)
-    if rain > 100:
+    if precipitation > 100:
         return "Thunderstorm"
-    elif rain > 5 and rain <= 50:
+    elif precipitation > 5 and precipitation <= 50:
         return "Drizzle"
-    elif rain > 0:
+    elif precipitation > 0:
         return "Rain"
     # cloud (%)
     elif cloud > 80:
         return "Cloudy"
-    # temp_max (Celcius) - humidity (%)
-    elif humidity > 90 and cloud > 70:
-        return "Foggy"
     else:
         return "Sunny"
 
@@ -45,7 +42,7 @@ for filename in os.listdir(folder_path):
             continue
 
         df["weather_type"] = df.apply(lambda row: weather_type(
-            row["temp_max"], row["precipitation"], row["humidity"], row["cloud"]
+            row["temp_max"], row["precipitation"], row["cloud"]
         ), axis=1)
 
         df.to_csv(file_path, index=False)

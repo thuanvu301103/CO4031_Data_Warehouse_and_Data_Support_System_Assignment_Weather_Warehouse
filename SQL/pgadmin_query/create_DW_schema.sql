@@ -33,7 +33,6 @@ CREATE TABLE climeweather.fact_weather (
     temp_max NUMERIC(5,2),
     temp_min NUMERIC(5,2),
     precipitation NUMERIC(5,2),
-    humidity NUMERIC(5,2),
     cloud NUMERIC(5,2),
     FOREIGN KEY (time_id) REFERENCES climeweather.dim_time(time_id),
     FOREIGN KEY (location_id) REFERENCES climeweather.dim_location(location_id),
