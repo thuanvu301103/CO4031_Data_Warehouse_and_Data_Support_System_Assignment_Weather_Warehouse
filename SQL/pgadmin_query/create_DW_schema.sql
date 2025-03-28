@@ -6,8 +6,16 @@ CREATE TABLE climeweather.dim_time (
     time_id SERIAL PRIMARY KEY,
     date DATE NOT NULL UNIQUE,
     day INT NOT NULL,
+    week_id INT NOT NULL REFERENCES climeweather.dim_time_week(week_id),
     month INT NOT NULL,
     quarter INT NOT NULL,
+    year INT NOT NULL
+);
+
+-- Create Dimension table: dim_time_week (Basically dim_time but at different granularity level)
+CREATE TABLE climeweather.dim_time_week (
+    week_id SERIAL PRIMARY KEY,
+    week_number INT NOT NULL,
     year INT NOT NULL
 );
 
@@ -37,4 +45,14 @@ CREATE TABLE climeweather.fact_weather (
     FOREIGN KEY (time_id) REFERENCES climeweather.dim_time(time_id),
     FOREIGN KEY (location_id) REFERENCES climeweather.dim_location(location_id),
     FOREIGN KEY (weather_type_id) REFERENCES climeweather.dim_weather_type(weather_id)
+);
+
+-- Create Fact table: fact_salanity
+CREATE TABLE climeweather.fact_salanity (
+    id SERIAL PRIMARY KEY,
+    week_id INT,
+    location_id INT,
+    salanity NUMERIC(5,2),
+    FOREIGN KEY (week_id) REFERENCES climeweather.dim_time_week(week_id),
+    FOREIGN KEY (location_id) REFERENCES climeweather.dim_location(location_id)
 );

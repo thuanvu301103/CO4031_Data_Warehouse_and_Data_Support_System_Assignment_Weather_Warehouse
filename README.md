@@ -28,6 +28,7 @@ Run [SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `pgAdmin`'s `Query 
 ### Visualize ERD
 1. Choose a table in `Object Explorer`
 2. Click right-mouse button then choose `ERD for table`
+The Schema for Data Warehouse is the same as this: ![ERD](asset/image/ERD.png)
 
 ## Design Staging Area
 - Staging Area will store raw data from many different sources (weather API, IoT, satellite sensor) before entering Data Warehouse.

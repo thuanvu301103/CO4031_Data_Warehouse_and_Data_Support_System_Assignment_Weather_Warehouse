@@ -1,3 +1,11 @@
+-- Insert data into dim_time_week
+INSERT INTO climeweather.dim_time_week (week_number, year)
+SELECT 
+    DISTINCT EXTRACT(WEEK FROM d) AS week_number,
+    EXTRACT(YEAR FROM d) AS year
+FROM generate_series('2020-01-01'::DATE, '2030-12-31'::DATE, '1 day'::INTERVAL) d
+ORDER BY year, week_number;
+
 -- Insert data into dim_time
 INSERT INTO climeweather.dim_time (date, day, month, quarter, year)
 SELECT 
@@ -6,11 +14,14 @@ SELECT
     EXTRACT(MONTH FROM d) AS month,
     EXTRACT(QUARTER FROM d) AS quarter,
     EXTRACT(YEAR FROM d) AS year
-FROM generate_series('2015-01-01'::DATE, '2030-12-31'::DATE, '1 day'::INTERVAL) d;
+FROM generate_series('2020-01-01'::DATE, '2030-12-31'::DATE, '1 day'::INTERVAL) d;
 
--- Add week column into dim_time table
-ALTER TABLE climeweather.dim_time ADD COLUMN week INTEGER;
-UPDATE climeweather.dim_time SET week = EXTRACT(WEEK FROM date);
+-- Insert week_id into dim_time
+UPDATE climeweather.dim_time AS dt
+SET week_id = dtw.week_id
+FROM climeweather.dim_time_week AS dtw
+WHERE EXTRACT(WEEK FROM dt.date) = dtw.week_number
+  AND dt.year = dtw.year;
 
 -- Insert data into dim_location
 INSERT INTO climeweather.dim_location (region, province)
