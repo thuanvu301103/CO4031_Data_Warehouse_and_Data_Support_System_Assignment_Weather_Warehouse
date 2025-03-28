@@ -21,7 +21,7 @@ UPDATE climeweather.dim_time AS dt
 SET week_id = dtw.week_id
 FROM climeweather.dim_time_week AS dtw
 WHERE EXTRACT(WEEK FROM dt.date) = dtw.week_number
-  AND dt.year = dtw.year;
+     AND EXTRACT(ISOYEAR FROM dt.date) = dtw.year;
 
 -- Insert data into dim_location
 INSERT INTO climeweather.dim_location (region, province)

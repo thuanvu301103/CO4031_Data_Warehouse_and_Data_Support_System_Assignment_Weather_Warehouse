@@ -47,12 +47,12 @@ CREATE TABLE climeweather.fact_weather (
     FOREIGN KEY (weather_type_id) REFERENCES climeweather.dim_weather_type(weather_id)
 );
 
--- Create Fact table: fact_salanity
-CREATE TABLE climeweather.fact_salanity (
+-- Create Fact table: fact_salinity
+CREATE TABLE climeweather.fact_salinity (
     id SERIAL PRIMARY KEY,
     week_id INT,
     location_id INT,
-    salanity NUMERIC(5,2),
+    salinity NUMERIC(5,2),
     FOREIGN KEY (week_id) REFERENCES climeweather.dim_time_week(week_id),
     FOREIGN KEY (location_id) REFERENCES climeweather.dim_location(location_id)
 );

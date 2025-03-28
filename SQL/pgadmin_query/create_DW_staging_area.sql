@@ -19,3 +19,13 @@ CREATE TABLE climeweather.staging_weather_cleaned (
     cloud NUMERIC(5,2),
     processed_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Create cleaned staging table: salinity
+CREATE TABLE climeweather.staging_salinity_cleaned (
+    id SERIAL PRIMARY KEY,
+    week_number INT,
+    year INT,
+    location VARCHAR(50),
+    avg_salinity NUMERIC(5,2),
+    processed_at TIMESTAMP DEFAULT NOW()
+);
