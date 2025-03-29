@@ -8,6 +8,9 @@
 ```
 
 ## Data Source
+The data used in this project comes from 2 source:
+- Weather data: collected daily through [MeteoSource API](https://www.meteosource.com/) and is provided in JSON format. It typically includes parameters such as temperature, humidity, precipitation, and other atmospheric conditions.
+- Soil salinity data: obtained from a flat file in CSV format. This file serves as a weekly aggregation of soil salinity levels. This dataset is collected weekly from reports issued by the Southern Regional Hydrometeorological Center of Vietnam's [website](https://http://www.kttv-nb.org.vn/).
 
 ## Create Data houseware Schema on PostgreSQL
 
@@ -23,7 +26,8 @@ Run [SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `pgAdmin`'s `Query 
 
 ### Insert sample data 
 - Run [SQL queries](SQL/pgadmin_query/insert_DW_schema_sample_data.sql) to insert sample data into dimension tables
-- Run [Python scripts](asset/dump_python_script) to insert sample data into fact tables
+- Run [Python scripts](asset/dump_python_script) to insert sample data into cleaned staging area tables
+
 
 ### Visualize ERD
 1. Choose a table in `Object Explorer`
@@ -32,17 +36,15 @@ Run [SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `pgAdmin`'s `Query 
 The Schema for Data Warehouse is the same as this: ![ERD](asset/image/ERD.png)
 
 ## Design Staging Area
-- Staging Area will store raw data from many different sources (weather API, IoT, satellite sensor) before entering Data Warehouse.
-- Select Database for Staging Area
-	- Use `PostgreSQL`
-	- The data will be saved in the form of `JSONB` for flexibility.
-	- There is an additional `Processed` column to mark the processed data or not.
+- Staging Area will store raw data from many different sources (weather API, IoT, satellite sensor) and cleaned data before entering Data Warehouse.
+- Type of Tables in Staging Area:
+	- Raw data table: store un-processed data from Data Source
+		- The data will be saved in the form of `JSONB` for flexibility.
+		- There is an additional `Processed` column to mark the processed data or not.
+	- Cleaned data table: store processed data, the data is ready to be imported into Data Warehouse 
 
 ### Create tables in Staging area
-- Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Raw Staging Tables:	
-	- Save all JSON data for flexibility when processing later.
-	- `Processed` column is used to determine whether the data has been loaded into Data Warehouse or not.
-- Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Cleaned Staging Tables
+Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Raw data Staging Tables and Cleaned data Staging Tables
 
 ### Create summarized data tables
 
@@ -79,15 +81,17 @@ ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
 4. Configure NiFi: Navigate to the `conf` folder in the extracted NiFi directory. Edit the `nifi.properties` file to set up configurations like ports, repositories, and sensitive properties.
 5. Start NiFi: Open Terminal then navigate to `bin` folder. Run `.\nifi.cmd start`.
 6. Access the NiFi UI: Open a web browser and go to `https://localhost:8443/nifi` (default port).
+7. Log in: username and password are automatically created by Nifi and stored in `logs/nifi-app.log`
 
 ### ETL Pipeline
 
 #### ETL from Data Source to Staging Area 
-- ETL from API to Staging Area 
-	- Extract data from API to `staging_weather_raw` table
-	- Process data from `staging_weather_raw` to `staging_weather_cleaned`
-	- Update `processed` column in `staging_weather_raw` table
-	
+- ETL weather data (import [processor](ApacheNifi_processor/Source_to_Staging/ETL_Weather _Data.json) into Nifi)
+	- Extract: fetch weather data from API
+	- Tranform: replace missing values
+	- Load: load transformed weather data into `staging_weather_raw` table
+- ETL soil salinity data
+	- 
 
 #### ETL from Staging Area to DWH
 - Insert data from `staging_weather_cleaned` into `fact_weather`
