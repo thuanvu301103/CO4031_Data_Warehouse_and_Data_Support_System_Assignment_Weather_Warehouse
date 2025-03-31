@@ -10,7 +10,7 @@
 ## Data Source
 The data used in this project comes from 2 source:
 - Weather data: collected daily through [MeteoSource API](https://www.meteosource.com/) and is provided in JSON format. It typically includes parameters such as temperature, humidity, precipitation, and other atmospheric conditions.
-- Soil salinity data: obtained from a flat file in CSV format. This file serves as a weekly aggregation of soil salinity levels. This dataset is collected weekly from reports issued by the Southern Regional Hydrometeorological Center of Vietnam's [website](https://http://www.kttv-nb.org.vn/).
+- Soil salinity data: obtained from a flat file in [CSV format](asset/dump_data/weekly_salinity_report.csv). This file serves as a weekly aggregation of soil salinity levels. This dataset is collected weekly from reports issued by the Southern Regional Hydrometeorological Center of Vietnam's [website](https://www.kttv-nb.org.vn/).
 
 ## Create Data houseware Schema on PostgreSQL
 
@@ -86,16 +86,18 @@ ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
 ### ETL Pipeline
 
 #### ETL from Data Source to Staging Area 
-- ETL weather data (import [processor](ApacheNifi_processor/Source_to_Staging/ETL_Weather _Data.json) into Nifi)
+- ETL weather data (import [processor](ApacheNifi_processor/Source_to_Staging/ETL_Weather_Data.json) into Nifi): execute every day
 	- Extract: fetch weather data from API
-	- Tranform: replace missing values
+	- Transform: replace missing values
 	- Load: load transformed weather data into `staging_weather_raw` table
-- ETL soil salinity data
-	- 
+- ETL soil salinity data (import [processor](ApacheNifi_processor/Source_to_Staging/ETL_Salinity_Data.json) into Nifi): execute every week
+	- Extract: fetch salinity data from CSV file ([weekly salinity report](asset/dump_data/weekly_salinity_report.csv))
+	- Transform: replace missing values
+	- Load: load transformed salinity data into `staging_salinity_raw` table
 
 #### ETL from Staging Area to DWH
 - Insert data from `staging_weather_cleaned` into `fact_weather`
-- Delete data in `staging_weathe_cleaned` table
+- Delete data in `staging_weather_cleaned` table
 
 ## DWH and OLAP Server
 

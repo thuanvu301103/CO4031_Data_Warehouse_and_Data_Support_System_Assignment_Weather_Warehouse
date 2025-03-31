@@ -1,10 +1,19 @@
 -- Create raw staging table: weather
 CREATE TABLE climeweather.staging_weather_raw (
     id SERIAL PRIMARY KEY,
-    source VARCHAR(50) NOT NULL,  -- Data source (API, IoT, Satellite, ...)
-    raw_data JSONB NOT NULL,       -- Store JSON raw data
-    received_at TIMESTAMP DEFAULT NOW(),  -- Insert data time
-    processed BOOLEAN DEFAULT FALSE -- Check if data is processed or not
+    source VARCHAR(50) NOT NULL,
+    raw_data JSONB NOT NULL,
+    received_at TIMESTAMP DEFAULT NOW(),
+    processed BOOLEAN DEFAULT FALSE
+);
+
+-- Create raw staging table: salinity
+CREATE TABLE climeweather.staging_salinity_raw (
+    id SERIAL PRIMARY KEY,
+    source VARCHAR(50) NOT NULL,
+    raw_data JSONB NOT NULL,
+    received_at TIMESTAMP DEFAULT NOW(),
+    processed BOOLEAN DEFAULT FALSE
 );
 
 -- Create cleaned staging table: weather
