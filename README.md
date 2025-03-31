@@ -1,4 +1,4 @@
-# Data houseware 
+# Data Warehouse Design and Implementation
 
 ## Requirement
 
@@ -86,19 +86,19 @@ ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
 ### ETL Pipeline
 
 #### ETL from Data Source to Staging Area 
-- ETL weather data (import [processor](ApacheNifi_processor/Source_to_Staging/ETL_Weather_Data.json) into Nifi): execute every day
+- ETL weather data (import [processor](ApacheNifi_processor/1_Source_to_Staging/ETL_Weather_Data.json) into Nifi): execute every day
 	- Extract: fetch weather data from API
 	- Transform: replace missing values
 	- Load: load transformed weather data into `staging_weather_raw` table
-- ETL soil salinity data (import [processor](ApacheNifi_processor/Source_to_Staging/ETL_Salinity_Data.json) into Nifi): execute every week
+- ETL soil salinity data (import [processor](ApacheNifi_processor/1_Source_to_Staging/ETL_Salinity_Data.json) into Nifi): execute every week
 	- Extract: fetch salinity data from CSV file ([weekly salinity report](asset/dump_data/weekly_salinity_report.csv))
 	- Transform: replace missing values
 	- Load: load transformed salinity data into `staging_salinity_raw` table
 
 #### Process raw data in Staging Area
-
+Process raw data in raw data tables. Tranform `JSONB` data into cleaned data then insert them into cleaned data tables. Execute every week (import [processor](ApacheNifi_processor/2_Process_in_Staging/Process_Data_in_Staging_Area.json).
 - Tranform raw weather data from `staging_weather_raw` table into cleaned weather data then insert into `staging_weather_cleaned` table using [Python script](Python_script/transform_raw_weather_data.py)
-- Tranform raw salinity data from `staging_salinity_raw` table into cleaned salinity data then insert into `staging_salinity_cleaned` table using Python script
+- Tranform raw salinity data from `staging_salinity_raw` table into cleaned salinity data then insert into `staging_salinity_cleaned` table using [Python script](Python_script/transform_raw_salinity_data.py)
 
 #### ETL from Staging Area to DWH
 - Insert data from `staging_weather_cleaned` into `fact_weather`
