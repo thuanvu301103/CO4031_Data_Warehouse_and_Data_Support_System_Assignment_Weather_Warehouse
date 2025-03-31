@@ -95,6 +95,11 @@ ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
 	- Transform: replace missing values
 	- Load: load transformed salinity data into `staging_salinity_raw` table
 
+#### Process raw data in Staging Area
+
+- Tranform raw weather data from `staging_weather_raw` table into cleaned weather data then insert into `staging_weather_cleaned` table using [Python script](Python_script/transform_raw_weather_data.py)
+- Tranform raw salinity data from `staging_salinity_raw` table into cleaned salinity data then insert into `staging_salinity_cleaned` table using Python script
+
 #### ETL from Staging Area to DWH
 - Insert data from `staging_weather_cleaned` into `fact_weather`
 - Delete data in `staging_weather_cleaned` table
