@@ -52,6 +52,9 @@ Summary Data refers to aggregated or pre-computed data in a Data Warehouse, desi
 - Run [SQL queries](SQL/pgadmin_query/create_DW_summary_table.sql) to create summary data tables
 - The tables contain summarized weather data by week and by month
 
+### Insert sample Summary Data
+Run [SQL queries](SQL/pgadmin_query/insert_DW_summary_table_dâ.sql) to insert summary data from fact tables
+
 ## ETL (Extract-Transform-Load) Technology
 `Apache Nifi` (Compatible with real-time data, provide visual interface) for ETL from Data Source to Staging Area
 
