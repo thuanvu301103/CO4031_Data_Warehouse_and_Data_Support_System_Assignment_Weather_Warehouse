@@ -28,7 +28,6 @@ Run [SQL queries](SQL/pgadmin_query/create_DW_schema.sql) in `pgAdmin`'s `Query 
 - Run [SQL queries](SQL/pgadmin_query/insert_DW_schema_sample_data.sql) to insert sample data into dimension tables
 - Run [Python scripts](asset/dump_python_script) to insert sample data into cleaned staging area tables
 
-
 ### Visualize ERD
 1. Choose a table in `Object Explorer`
 2. Click right-mouse button then choose `ERD for table`
@@ -46,30 +45,12 @@ The Schema for Data Warehouse is the same as this: ![ERD](asset/image/ERD.png)
 ### Create tables in Staging area
 Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Raw data Staging Tables and Cleaned data Staging Tables
 
-### Create summarized data tables
+## Summary Data
+Summary Data refers to aggregated or pre-computed data in a Data Warehouse, designed to improve query performance and facilitate rapid analysis. Instead of repeatedly querying large, detailed datasets, users can work with condensed, pre-summarized information
 
-- Create summarized data tables by provinces and month
-```sql
-CREATE TABLE climeweather.aggregated_weather_province_month AS
-SELECT 
-    t.year, 
-    t.month, 
-    l.province, 
-    AVG(f.temperature) AS avg_temp, 
-    AVG(f.humidity) AS avg_humidity,
-    AVG(f.wind_speed) AS avg_wind_speed
-FROM climeweather.fact_weather f
-JOIN climeweather.dim_time t ON f.time_id = t.time_id
-JOIN climeweather.dim_location l ON f.location_id = l.location_id
-GROUP BY t.year, t.month, l.province;
-
--- Add UNIQUE constraint after table creation
-ALTER TABLE climeweather.aggregated_weather_province_month
-ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
-```
-
-- Other tables...
-
+### Create Summary Data tables
+- Run [SQL queries](SQL/pgadmin_query/create_DW_summary_table.sql) to create summary data tables
+- The tables contain summarized weather data by week and by month
 
 ## ETL (Extract-Transform-Load) Technology
 `Apache Nifi` (Compatible with real-time data, provide visual interface) for ETL from Data Source to Staging Area
@@ -96,7 +77,7 @@ ADD CONSTRAINT unique_year_month_province UNIQUE (year, month, province);
 	- Load: load transformed salinity data into `staging_salinity_raw` table
 
 #### Process raw data in Staging Area
-Process raw data in raw data tables. Tranform `JSONB` data into cleaned data then insert them into cleaned data tables. Execute every week (import [processor](ApacheNifi_processor/2_Process_in_Staging/Process_Data_in_Staging_Area.json).
+Process raw data in raw data tables. Tranform `JSONB` data into cleaned data then insert them into cleaned data tables. Execute every week (import [processor](ApacheNifi_processor/2_Process_in_Staging/Process_Data_in_Staging_Area.json)).
 - Tranform raw weather data from `staging_weather_raw` table into cleaned weather data then insert into `staging_weather_cleaned` table using [Python script](Python_script/transform_raw_weather_data.py)
 - Tranform raw salinity data from `staging_salinity_raw` table into cleaned salinity data then insert into `staging_salinity_cleaned` table using [Python script](Python_script/transform_raw_salinity_data.py)
 
