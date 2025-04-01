@@ -53,7 +53,7 @@ Summary Data refers to aggregated or pre-computed data in a Data Warehouse, desi
 - The tables contain summarized weather data by week and by month
 
 ### Insert sample Summary Data
-Run [SQL queries](SQL/pgadmin_query/insert_DW_summary_table_dâ.sql) to insert summary data from fact tables
+Run [SQL queries](SQL/pgadmin_query/insert_DW_summary_table_data.sql) to insert summary data from fact tables
 
 ## ETL (Extract-Transform-Load) Technology
 `Apache Nifi` (Compatible with real-time data, provide visual interface) for ETL from Data Source to Staging Area
@@ -109,12 +109,16 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 3. Input connection information:
 	- Server: `localhost:5432`
 	- Database: `climeweather_dw`
-4. Choose `DirectQuery`
+4. Choose `DirectQuery` (Query directly from DB when opening the report)
 5. Input username and password
+6. In `Navigator` dialog box, select all tables that will be used and click `Load` (Since `DirectQuery` is chosen, Power Bi does not download data, but send SQL query to Postgresql whenever you change the filter, create charts, or open Dashboard - Loading data in this step is actually loading metadata)
 
-### Query data from Data Warehouse
-1. In `Home` → `Recent sources`
-2. Choose PostgreSQL server that has been connected
-3. Choose the data table that need to be used (the data can be Transformed before Loaded)
-
-### Generate Report 
+### Create charts
+1. Go to `Report View`
+2. In `Visualizations`, select desired type of chart
+3. Pull the columns into the chart in `Build visual`:
+	- Axis (X axis)
+	- Values ​​(Value)
+	- Legend (classification)
+	- ...
+4. Format chart's and axis's titles in `Format visual`  
