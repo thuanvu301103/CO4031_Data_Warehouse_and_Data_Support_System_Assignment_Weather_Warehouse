@@ -98,7 +98,7 @@ Stored in `fact _weather` and dimetional tables
 #### Aggregated or summarized data
 Run [SQL queries](SQL/nifi_flow_query/update_summarized_data.sql) to summarize data in Nifi
 
-## BI Tool
+## BI Tool and OLAP
 
 ### Power BI
 Power BI is a strong BI (Business Intelligence) tool, which helps you analyze and visualize data from Data Warehouse easily.
@@ -113,7 +113,23 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 5. Input username and password
 6. In `Navigator` dialog box, select all tables that will be used and click `Load` (Since `DirectQuery` is chosen, Power Bi does not download data, but send SQL query to Postgresql whenever you change the filter, create charts, or open Dashboard - Loading data in this step is actually loading metadata)
 
-### Create charts
+### Data Model in Power BI
+- OLAP works on the relational data model, so it is necessary to organize data under the Star Schema model or Snowflake Schema with the tables
+- After loading tables, Power BI will automatically create Data Model. Change to `Model View`, the data model will be the same as follow
+![Data Model](asset/image/Power BI Model View.png)
+
+### Set up Hierarchies in Power BI
+- Each dimension can have hierarchies, which define the levels of granularity. 
+- Hierarchies allow users to drill down or roll up through levels of detail.
+- Steps to set up Hierarchies:
+	1. Select a dim table in `Model View`.
+	2. Choose the hierarchy column (eg: Year, Quarter, Month, Day).
+	3. Right-click on a column → `Create Hierarchy`.
+	4. Name Hierarchy (eg: "Date Hierarchy").
+	5. Pull other columns into Hierarchy to create decentralized level.
+![Data Model](asset/image/Power BI Hierarchy.png)
+
+### Create charts in PoweR BI
 1. Go to `Report View`
 2. In `Visualizations`, select desired type of chart
 3. Pull the columns into the chart in `Build visual`:
@@ -121,4 +137,5 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 	- Values ​​(Value)
 	- Legend (classification)
 	- ...
-4. Format chart's and axis's titles in `Format visual`  
+4. Format chart's and axis's titles in `Format visual` 
+
