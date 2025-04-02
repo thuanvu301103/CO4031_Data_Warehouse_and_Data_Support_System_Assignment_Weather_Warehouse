@@ -116,7 +116,7 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 ### Data Model in Power BI
 - OLAP works on the relational data model, so it is necessary to organize data under the Star Schema model or Snowflake Schema with the tables
 - After loading tables, Power BI will automatically create Data Model. Change to `Model View`, the data model will be the same as follow
-![Data Model](asset/image/Power BI Model View.png)
+![Data Model](asset/image/Power_BI_Model_View.png)
 
 ### Set up Hierarchies in Power BI
 - Each dimension can have hierarchies, which define the levels of granularity. 
@@ -127,9 +127,9 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 	3. Right-click on a column → `Create Hierarchy`.
 	4. Name Hierarchy (eg: "Date Hierarchy").
 	5. Pull other columns into Hierarchy to create decentralized level.
-![Hierarchy](asset/image/Power BI Hierarchy.png)
+![Hierarchy](asset/image/Power_BI_Hierarchy.png)
 
-### Create charts in PoweR BI
+### Create charts in Power BI
 1. Go to `Report View`
 2. In `Visualizations`, select desired type of chart
 3. Pull the columns into the chart in `Build visual`:
@@ -139,3 +139,15 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 	- ...
 4. Format chart's and axis's titles in `Format visual` 
 
+### OLAP Operations in Power BI 
+1. **Roll-Up**
+	- Insert a column chart (bar chart, line chart, matrix).
+	- Pull Hierarchy into the X axis.
+	- Press `Drill Up` to return to synthesis.
+
+2. **Drill-Down**
+	- Insert a column chart (bar chart, line chart, matrix).
+	- Pull Hierarchy into the X axis.
+	- Enable `Drill Down Mode` so you can explore data at different levels at a point on X axis
+	- Press `Expand all down one level` so you can explore data at different levels at every point on X axis.
+![Power BI Drill up and Drill Down](asset/image/Power_BI_drill_up_drill_down.png)
