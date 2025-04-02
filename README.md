@@ -150,4 +150,10 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 	- Pull Hierarchy into the X axis.
 	- Enable `Drill Down Mode` so you can explore data at different levels at a point on X axis
 	- Press `Expand all down one level` so you can explore data at different levels at every point on X axis.
-![Power BI Drill up and Drill Down](asset/image/Power_BI_drill_up_drill_down.png)
+![Power BI Drill Up and Drill Down](asset/image/Power_BI_drill_up_drill_down.png)
+
+3. **Slice**
+	- Go to `Visualizations` tab → Select `Slicer`.
+	- Pull the column to filter into `Slicer` (eg: Year, Region, Category).
+	- When choosing a value in `Slicer`, the report will automatically update.
+![Power BI Slice](asset/image/Power_BI_slice.png)
