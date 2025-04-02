@@ -127,7 +127,7 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 	3. Right-click on a column → `Create Hierarchy`.
 	4. Name Hierarchy (eg: "Date Hierarchy").
 	5. Pull other columns into Hierarchy to create decentralized level.
-![Data Model](asset/image/Power BI Hierarchy.png)
+![Hierarchy](asset/image/Power BI Hierarchy.png)
 
 ### Create charts in PoweR BI
 1. Go to `Report View`
