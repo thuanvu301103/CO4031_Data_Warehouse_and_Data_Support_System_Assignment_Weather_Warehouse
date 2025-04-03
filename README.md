@@ -2,6 +2,20 @@
 
 ## Requirement
 
+### Objectives
+The Data Warehouse system aims to:
+- Store and analyze weather data (temperature, humidity, rainfall, etc.).
+- Store and analyze soil salinity data for different regions, provinces.
+- Support decision-making in agriculture, particularly in mitigating climate change risks.
+
+### Scope
+- Geographical coverage: Southern Vietnam provinces only.
+- Collected data:
+	- Weather data
+	- Soil salinity data
+- Retention period: At least 4 years for trend analysis.
+- Update frequency: Daily, weekly...
+
 ## General Structure
 ```css
 [Data Sources] → [ETL (Apache NiFi)] → [Staging Area] → [Data Warehouse] → [BI Tools]
@@ -170,8 +184,8 @@ When using `DirectQuery`, each OLAP operator on `Power Bi` will send one or more
 
 ### Visualize Map in Power BI
 1. Create GeoJSON file:
-	- Download Vietnam GeoJSON file from [link](https://data.opendevelopmentmekong.net/dataset/a-phn-tnh) and save as [this GeoJSON file](asset /dump_data/geo_data/vietnam_province.geojson)
-	- Run [Python script](asset/dump_python_script/filter_geojson_data.py) to filter [necessary provinces](asset /dump_data/geo_data/vietnam_southern_province.geojson)
+	- Download Vietnam GeoJSON file from [link](https://data.opendevelopmentmekong.net/dataset/a-phn-tnh) and save as [this GeoJSON file](asset/dump_data/geo_data/vietnam_province.geojson)
+	- Run [Python script](asset/dump_python_script/filter_geojson_data.py) to filter [necessary provinces](asset/dump_data/geo_data/vietnam_southern_province.geojson)
 2. Convert GeoJSON to TopoJSON: use this [website](https://mapshaper.org/)
 3. Build the Shape Map visual
 	- Drag the `Shape Map` to `Power BI Canvas`
