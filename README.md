@@ -45,7 +45,7 @@ The Schema for Data Warehouse is the same as this: ![ERD](asset/image/ERD.png)
 ### Create tables in Staging area
 Run [SQL queries](SQL/pgadmin_query/create_DW_staging_area.sql) in `pgAdmin`'s `Query Tool` to create Raw data Staging Tables and Cleaned data Staging Tables
 
-## Summary Data
+<!-- ## Summary Data
 Summary Data refers to aggregated or pre-computed data in a Data Warehouse, designed to improve query performance and facilitate rapid analysis. Instead of repeatedly querying large, detailed datasets, users can work with condensed, pre-summarized information
 
 ### Create Summary Data tables
@@ -54,6 +54,7 @@ Summary Data refers to aggregated or pre-computed data in a Data Warehouse, desi
 
 ### Insert sample Summary Data
 Run [SQL queries](SQL/pgadmin_query/insert_DW_summary_table_data.sql) to insert summary data from fact tables
+-->
 
 ## ETL (Extract-Transform-Load) Technology
 `Apache Nifi` (Compatible with real-time data, provide visual interface) for ETL from Data Source to Staging Area
@@ -88,7 +89,7 @@ Process raw data in raw data tables. Tranform `JSONB` data into cleaned data the
 - Insert data from `staging_weather_cleaned` into `fact_weather`
 - Delete data in `staging_weather_cleaned` table
 
-## DWH and OLAP Server
+<!-- ## DWH and OLAP Server
 
 ### Data
 
@@ -97,6 +98,7 @@ Stored in `fact _weather` and dimetional tables
 
 #### Aggregated or summarized data
 Run [SQL queries](SQL/nifi_flow_query/update_summarized_data.sql) to summarize data in Nifi
+-->
 
 ## BI Tool and OLAP
 
@@ -140,6 +142,8 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 4. Format chart's and axis's titles in `Format visual` 
 
 ### OLAP Operations in Power BI 
+When using `DirectQuery`, each OLAP operator on `Power Bi` will send one or more SQL queries to `Postgresql` to process data and return the results
+
 1. **Roll-Up**
 	- Insert a column chart (bar chart, line chart, matrix).
 	- Pull Hierarchy into the X axis.
@@ -157,3 +161,22 @@ Power BI is a strong BI (Business Intelligence) tool, which helps you analyze an
 	- Pull the column to filter into `Slicer` (eg: Year, Region, Category).
 	- When choosing a value in `Slicer`, the report will automatically update.
 ![Power BI Slice](asset/image/Power_BI_slice.png)
+
+4. **Dice**
+	- Select a chart or data sheet.
+	- Go to the `Filters` tab.
+	- Add desired filtration conditions (eg: Category = 'Laptop', Region = 'Hanoi').
+![Power BI Dice](asset/image/Power_BI_dice.png)
+
+### Visualize Map in Power BI
+1. Create GeoJSON file:
+	- Download Vietnam GeoJSON file from [link](https://data.opendevelopmentmekong.net/dataset/a-phn-tnh) and save as [this GeoJSON file](asset /dump_data/geo_data/vietnam_province.geojson)
+	- Run [Python script](asset/dump_python_script/filter_geojson_data.py) to filter [necessary provinces](asset /dump_data/geo_data/vietnam_southern_province.geojson)
+2. Convert GeoJSON to TopoJSON: use this [website](https://mapshaper.org/)
+3. Build the Shape Map visual
+	- Drag the `Shape Map` to `Power BI Canvas`
+	- Under the `Build` tab, drag `location` into the `Location Area`
+	- Under the `Format` tab, expand `Map Setting`, set `Map type` to `Custom map` then select the saved TopoJSON file in `Add a map type`
+
+For more specific instructions, please follow this [article](https://www.linkedin.com/pulse/creating-custom-shape-map-power-bi-vietnams-province-holt-nguyen/)
+ 
