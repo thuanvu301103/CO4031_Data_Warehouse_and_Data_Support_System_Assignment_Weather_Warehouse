@@ -193,4 +193,6 @@ When using `DirectQuery`, each OLAP operator on `Power Bi` will send one or more
 	- Under the `Format` tab, expand `Map Setting`, set `Map type` to `Custom map` then select the saved TopoJSON file in `Add a map type`
 
 For more specific instructions, please follow this [article](https://www.linkedin.com/pulse/creating-custom-shape-map-power-bi-vietnams-province-holt-nguyen/)
- 
+
+The result after visualize data fetching from Data Warehouse may be the same as follow:
+![Power BI Slice](asset/image/Power_BI_visualize_result.png)
