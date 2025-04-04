@@ -100,7 +100,7 @@ Process raw data in raw data tables. Tranform `JSONB` data into cleaned data the
 - Tranform raw salinity data from `staging_salinity_raw` table into cleaned salinity data then insert into `staging_salinity_cleaned` table using [Python script](Python_script/transform_raw_salinity_data.py)
 
 #### ETL from Staging Area to DWH
-
+Import [processor](ApacheNifi_processor/3_Staging_to_DWH/ETL_from_Staging_to_DWH.json), which use [Python scripts](Python_script) to process ETL into Nifi (execute every week)
 - Extract: get cleaned data from `staging_weather_cleaned` and `staging_salinity_cleaned`
 - Transform: handling missing data
 	- Missing Weather data: use moving average to handle missing value (weather data is collected in a short time - every day) 
