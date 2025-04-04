@@ -24,7 +24,7 @@ The Data Warehouse system aims to:
 ## Data Source
 The data used in this project comes from 2 source:
 - Weather data: collected daily through [MeteoSource API](https://www.meteosource.com/) and is provided in JSON format. It typically includes parameters such as temperature, humidity, precipitation, and other atmospheric conditions.
-- Soil salinity data: obtained from a flat file in [CSV format](asset/dump_data/weekly_salinity_report.csv). This file serves as a weekly aggregation of soil salinity levels. This dataset is collected weekly from reports issued by the Southern Regional Hydrometeorological Center of Vietnam's [website](https://www.kttv-nb.org.vn/).
+- Soil salinity data: obtained from a flat file in [CSV format](asset/dump_data/weekly_report/weekly_salinity_report.csv). This file serves as a weekly aggregation of soil salinity levels. This dataset is collected weekly from reports issued by the Southern Regional Hydrometeorological Center of Vietnam's [website](https://www.kttv-nb.org.vn/).
 
 ## Create Data houseware Schema on PostgreSQL
 
@@ -87,10 +87,10 @@ Run [SQL queries](SQL/pgadmin_query/insert_DW_summary_table_data.sql) to insert 
 #### ETL from Data Source to Staging Area 
 - ETL weather data (import [processor](ApacheNifi_processor/1_Source_to_Staging/ETL_Weather_Data.json) into Nifi): execute every day
 	- Extract: fetch weather data from API
-	- Transform: replace missing values
+	- Transform: change unit
 	- Load: load transformed weather data into `staging_weather_raw` table
 - ETL soil salinity data (import [processor](ApacheNifi_processor/1_Source_to_Staging/ETL_Salinity_Data.json) into Nifi): execute every week
-	- Extract: fetch salinity data from CSV file ([weekly salinity report](asset/dump_data/weekly_salinity_report.csv))
+	- Extract: fetch salinity data from CSV file ([weekly salinity report](asset/dump_data/weekly_report/weekly_salinity_report.csv))
 	- Transform: replace missing values
 	- Load: load transformed salinity data into `staging_salinity_raw` table
 
@@ -100,21 +100,15 @@ Process raw data in raw data tables. Tranform `JSONB` data into cleaned data the
 - Tranform raw salinity data from `staging_salinity_raw` table into cleaned salinity data then insert into `staging_salinity_cleaned` table using [Python script](Python_script/transform_raw_salinity_data.py)
 
 #### ETL from Staging Area to DWH
-- Insert data from `staging_weather_cleaned` into `fact_weather`
-- Delete data in `staging_weather_cleaned` table
 
-<!-- ## DWH and OLAP Server
+- Extract: get cleaned data from `staging_weather_cleaned` and `staging_salinity_cleaned`
+- Transform: handling missing data
+	- Missing Weather data: use moving average to handle missing value (weather data is collected in a short time - every day) 
+	- Missing Salinity data: label as missing value 
+- Load: load transform data to fact tables 
+- Delete cleaned data in `staging_weather_cleaned` and `staging_salinity_cleaned`
 
-### Data
-
-#### Detailed, granular data
-Stored in `fact _weather` and dimetional tables
-
-#### Aggregated or summarized data
-Run [SQL queries](SQL/nifi_flow_query/update_summarized_data.sql) to summarize data in Nifi
--->
-
-## BI Tool and OLAP
+## BI Tool and OLAP operations
 
 ### Power BI
 Power BI is a strong BI (Business Intelligence) tool, which helps you analyze and visualize data from Data Warehouse easily.
