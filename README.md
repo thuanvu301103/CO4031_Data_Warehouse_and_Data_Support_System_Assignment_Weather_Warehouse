@@ -108,6 +108,9 @@ Import [processor](ApacheNifi_processor/3_Staging_to_DWH/ETL_from_Staging_to_DWH
 - Load: load transform data to fact tables 
 - Delete cleaned data in `staging_weather_cleaned` and `staging_salinity_cleaned`
 
+## OLAP Server
+`PostgreSQL` is not an OLAP-specialized database, but it can still serve as an effective OLAP server in many use cases. Although it uses row-based storage and is optimized for transactional (OLTP) workloads, PostgreSQL supports powerful analytical features such as `GROUP BY`, `ROLLUP`, `CUBE`, `window functions`, `CTEs`, and `partitioning`. These capabilities allow it to handle multi-dimensional analysis and reporting tasks quite well, especially when dealing with medium-sized datasets (from megabytes to tens of gigabytes). Extensions like `cstore_fdw`, `TimescaleDB`, and `pg_partman` further enhance its ability to perform OLAP-like operations, including time-series analysis and columnar storage
+
 ## BI Tool and OLAP operations
 
 ### Power BI
