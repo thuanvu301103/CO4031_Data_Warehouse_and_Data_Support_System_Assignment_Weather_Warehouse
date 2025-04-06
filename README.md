@@ -17,9 +17,7 @@ The Data Warehouse system aims to:
 - Update frequency: Daily, weekly...
 
 ## General Structure
-```css
-[Data Sources] → [ETL (Apache NiFi)] → [Staging Area] → [Data Warehouse] → [BI Tools]
-```
+![Data Warehouse Structure](asset/image/Data_Warehouse_Structure.png)
 
 ## Data Source
 The data used in this project comes from 2 source:
