@@ -19,6 +19,9 @@ The Data Warehouse system aims to:
 ## General Structure
 ![Data Warehouse Structure](asset/image/Data_Warehouse_Structure.png)
 
+## Three-Tier Architecture
+![Three Tier Architecture](asset/image/Three_Tier_Architecture.png)
+
 ## Data Source
 The data used in this project comes from 2 source:
 - Weather data: collected daily through [MeteoSource API](https://www.meteosource.com/) and is provided in JSON format. It typically includes parameters such as temperature, humidity, precipitation, and other atmospheric conditions.
